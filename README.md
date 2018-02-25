@@ -8,9 +8,19 @@ This is a maven project, so just run:
 
   mvn compile
 
-There's a docker-compose file included, so if you like docker, you can set the mysql database up and running, including schema and tables creation with this command:
+There's a docker-compose file included, so if you like docker, you can set the mysql database up and running, including schema and tables creation.
+
+First you'll need a dockker mysql image:
+
+  docker pull mysql/mysql-server:tag
+
+Then start the instance, with schema/table definition:
 
   docker-compose up mysql
+  
+Otherwise you can just install a local MysqlServer.
+
+*Check the application.properties file to set the database configurating according with your current mysql installation.
 
 -Once the db is running, you can import the included Addresses.json and Contracts.json data files from some Sql tool like MysqlWorkbench.
 
