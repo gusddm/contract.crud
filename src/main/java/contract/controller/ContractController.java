@@ -39,7 +39,7 @@ public class ContractController {
     if (person == null) {
       return ResponseEntity.notFound().build();
     }
-    final Resource<Contract> resource = new Resource<Contract>(person);
+    final Resource<Contract> resource = new Resource<>(person);
     resource.add(linkTo(methodOn(ContractController.class).getContract(id)).withSelfRel());
 
     return ResponseEntity.ok(resource);
@@ -73,9 +73,26 @@ public class ContractController {
     return ResponseEntity.ok(resource);
   }
   
+  @RequestMapping(value = "", method = RequestMethod.GET)
+  @ResponseBody public ResponseEntity<?> findByEmailOrPhoneNumber(@RequestParam(value = "email", required = false) final String email, 
+		  												   		  @RequestParam(value = "phoneNumber", required = false) final String phoneNumber) {
+
+	final List<Contract> contract = contractService.findByEmailOrPhoneNumber(email, phoneNumber);
+
+	if (contract == null) {
+		return ResponseEntity.notFound().build();
+	}
+
+	final Resources<Contract> resource = new Resources<>(contract);
+
+    resource.add(linkTo(methodOn(ContractController.class).findByEmailOrPhoneNumber(email, phoneNumber)).withSelfRel());
+
+    return ResponseEntity.ok(resource);
+  }
+  
   
   /**
-   * Contract partial update.
+   * Contract partial update using PATCH - shallow level only (not address)
    * @return Contract
    */
   @PatchMapping(value = "/{id}")
@@ -84,7 +101,7 @@ public class ContractController {
     
     final Contract persistedContract = contractService.saveOrUpdate(contract);
     
-    final Resource<Contract> resource = new Resource<Contract>(persistedContract);
+    final Resource<Contract> resource = new Resource<>(persistedContract);
     resource.add(linkTo(methodOn(ContractController.class).getContract(id)).withSelfRel());
 
     return ResponseEntity.ok(resource);
@@ -99,7 +116,7 @@ public class ContractController {
 	
 	final Contract persistedContract = contractService.saveOrUpdate(contract);	
     
-    final Resource<Contract> resource = new Resource<Contract>(persistedContract);
+    final Resource<Contract> resource = new Resource<>(persistedContract);
     resource.add(
         linkTo(methodOn(ContractController.class).getContract(persistedContract.getId())).withSelfRel()
     );
@@ -110,7 +127,7 @@ public class ContractController {
   }
   
   /**
-   * Contract creation.
+   * Contract deletion.
    * @return Contract
    */
   @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)

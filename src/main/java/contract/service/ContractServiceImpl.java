@@ -13,8 +13,6 @@ import contract.model.repository.ContractRepository;
 @Transactional
 @Service
 public class ContractServiceImpl implements ContractService {
-	
-	public enum CONTRACT_FIELDS {NAME, COMPANY, IMAGE, EMAIL, BIRTHDAY, PHONE_NUMBER}
 
 	@Autowired
 	private transient ContractRepository contractRepository;
@@ -37,6 +35,11 @@ public class ContractServiceImpl implements ContractService {
 	@Override
 	public List<Contract> findByCityOrState(String city, String state) {		
 		return contractRepository.findByAddressesCityOrAddressesState(city, state);
+	}
+	
+	@Override
+	public List<Contract> findByEmailOrPhoneNumber(String email, String phoneNumber) {
+		return contractRepository.findByEmailOrPhoneNumber(email, phoneNumber);
 	}
 
 	@Override

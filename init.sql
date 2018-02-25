@@ -4,12 +4,12 @@ CREATE TABLE IF NOT EXISTS contract_db.profile (
   id           BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   name 		   varchar(60) not null,
   company  	   varchar(60) not null,
-  image 	   varchar(60) not null,
+  image 	   varchar(100) not null,
   email		   varchar(60) not null,
   birthdate    DATETIME NOT NULL,
   phone_number varchar(60) not null,
   created_at   DATETIME NOT NULL,
-  updated_at   DATETIME NOT NULL
+  updated_at   DATETIME
 
 );
 
@@ -20,4 +20,4 @@ CREATE TABLE IF NOT EXISTS contract_db.address (
   city 		  varchar(60) not null,
   state		  varchar(30) not null,
   postal_code varchar(20) not null
-);
+); 

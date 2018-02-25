@@ -4,7 +4,7 @@ mysql:
   image: mysql:latest
   volumes:
     - ./init.sql:/docker-entrypoint-initdb.d/init.sql  
-    - /opt/mysql_data:/var/lib/mysql
+    #- /opt/mysql_data:/var/lib/mysql
   environment:
     MYSQL_ROOT_PASSWORD: password
     MYSQL_DATABASE: test
@@ -19,4 +19,4 @@ api:
   environment:
     SPRING_DATASOURCE_URL: jdbc:mysql://mysql/test
   links:
-    - mysql
+    - mysql 

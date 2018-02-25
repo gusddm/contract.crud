@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
@@ -21,6 +22,7 @@ public class ContractApplication {
      ObjectMapper objectMapper = new ObjectMapper();
      //objectMapper.setDefaultMergeable(true);
      objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+     objectMapper.setSerializationInclusion(Include.NON_NULL);
      jsonConverter.setObjectMapper(objectMapper);
      return jsonConverter;
     }

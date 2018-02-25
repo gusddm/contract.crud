@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
@@ -22,10 +23,11 @@ public class Contract extends CommonBaseModel {
 	private String image;
 	private String email;
 	private Date birthdate;
-	private String phone_number;
+	
+	@Column(name = "phone_number")
+	private String phoneNumber;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "contract", cascade = {CascadeType.ALL}, orphanRemoval = true)
-	//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property="contract")
 	@JsonManagedReference
 	private List<Address> addresses = new ArrayList<>();
 
@@ -70,11 +72,11 @@ public class Contract extends CommonBaseModel {
 	}
 
 	public String getPhone_number() {
-		return phone_number;
+		return phoneNumber;
 	}
 
 	public void setPhone_number(String phone_number) {
-		this.phone_number = phone_number;
+		this.phoneNumber = phone_number;
 	}
 
 	public List<Address> getAddresses() {

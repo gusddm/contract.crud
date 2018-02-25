@@ -35,11 +35,10 @@ public class ContractControllerTest {
     private ContractService contractServiceMock;
 
     @Test
-    public void testList() throws Exception {
+    public void testSearchByCity() throws Exception {
 
-    	java.util.Date utilDate = new java.util.Date(); //fecha actual
-    	long lnMilisegundos = utilDate.getTime();
-    	Timestamp date = new java.sql.Timestamp(lnMilisegundos);
+    	java.util.Date utilDate = new java.util.Date();
+    	Timestamp date = new java.sql.Timestamp(utilDate.getTime());
     	
     	Contract contract = new Contract();
     	contract.setName("Johny");
@@ -65,14 +64,14 @@ public class ContractControllerTest {
     	contract2.setUpdatedAt(date);
    	 	
     	Address address = new Address();
-    	address.setCity("loma");
+    	address.setCity("Buenos Aires");
     	address.setContract(contract);
     	address.setPostal_code("1234");
-    	address.setState("acanoma");
+    	address.setState("Buenos Aires");
     	address.setAddress("calle falsa 123");
     	
     	Address address2 = new Address();
-    	address.setCity("hermosa");
+    	address.setCity("Buenos Aires");
     	address.setContract(contract2);
     	
     	List<Address> addresses = Arrays.asList(address, address2);
@@ -82,11 +81,10 @@ public class ContractControllerTest {
 
    	 	List<Contract> contractList = Arrays.asList(contract, contract2);
 
-   	 	given(contractServiceMock.findByCityOrState("loma", null)).willReturn(contractList);
+   	 	given(contractServiceMock.findByCityOrState("Buenos Aires", null)).willReturn(contractList);
     	
-        mockMvc.perform(get("/contract/address?city=loma"))
+        mockMvc.perform(get("/contract/address?city=Buenos Aires"))
                 .andExpect(status().isOk())
-                //.andExpect(content().string("loma"));                
                 .andExpect(jsonPath("$..*.contracts.*", hasSize(2)));
     }
 }

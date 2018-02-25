@@ -30,7 +30,6 @@ import contract.configuration.patch.PatchRequestBody;
 /**
  * This ArgumentResolver retrieves the actual entity from the service specified in the {@link Patch}.
  * It calls a method called "find(id)" using the "id" specified in the query parameter of the method.
- * Created by socrates on 7/19/16.
  */
 @Component
 public class PartialArgumentResolver implements HandlerMethodArgumentResolver {
