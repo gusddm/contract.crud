@@ -1,13 +1,13 @@
 package contract.service;
 
 import java.util.List;
-import java.util.Map;
 
 import contract.model.Contract;
 
 public interface ContractService {
 	Contract saveOrUpdate(Contract contract);
 	List<Contract> findByName(String name);
+	List<Contract> findByCityOrState(String city, String state);
 	Contract find(Long id);
-	Contract savePartial(Map<String, Object> updates, Long contractId);
+	void delete(Long id);
 }

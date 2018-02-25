@@ -3,7 +3,6 @@ package contract.controller;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +11,7 @@ import org.springframework.hateoas.Resources;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.ResponseEntity.BodyBuilder;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -57,22 +57,30 @@ public class ContractController {
     return ResponseEntity.ok(resource);
   }
   
+  @RequestMapping(value = "/address", method = RequestMethod.GET)
+  @ResponseBody public ResponseEntity<?> getContractByCity(@RequestParam(value = "city", required = false) final String city, 
+		  												   @RequestParam(value = "state", required = false) final String state) {
+	
+	final List<Contract> contractList = contractService.findByCityOrState(city, state);
+
+	if (contractList == null) {
+		return ResponseEntity.notFound().build();
+	}
+
+	final Resources<Contract> resource = new Resources<>(contractList);
+    resource.add(linkTo(methodOn(ContractController.class).getContractByCity(city, state)).withSelfRel());
+
+    return ResponseEntity.ok(resource);
+  }
+  
   
   /**
-   * Contract update.
+   * Contract partial update.
    * @return Contract
    */
   @PatchMapping(value = "/{id}")
   @Patch(service = ContractService.class, id = Long.class)
   @ResponseBody public ResponseEntity<?> updateContract(@PathVariable final Long id,  @PatchRequestBody Contract contract) {
-
-//	final Contract contractOld = contractService.find(id);
-//    
-//    if (contract == null) {
-//      return ResponseEntity.notFound().build();
-//    }
-//    
-//    contract.setId(contractOld.getId());
     
     final Contract persistedContract = contractService.saveOrUpdate(contract);
     
@@ -100,6 +108,14 @@ public class ContractController {
         .contentType(MediaType.APPLICATION_JSON)
         .body(resource);
   }
- 
-
+  
+  /**
+   * Contract creation.
+   * @return Contract
+   */
+  @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+  @ResponseBody public BodyBuilder deleteContract(@PathVariable final Long id) {	
+	contractService.delete(id);    
+	return ResponseEntity.ok();
+  }	
 }

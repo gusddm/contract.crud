@@ -1,8 +1,8 @@
 package contract.model;
 
 import java.sql.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -10,9 +10,7 @@ import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 /** Person data model. */
 @Entity
@@ -26,10 +24,10 @@ public class Contract extends CommonBaseModel {
 	private Date birthdate;
 	private String phone_number;
 	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "contract", cascade = {CascadeType.ALL}, orphanRemoval = true)
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property="contract")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "contract", cascade = {CascadeType.ALL}, orphanRemoval = true)
+	//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property="contract")
 	@JsonManagedReference
-	private Set<Address> addresses;
+	private List<Address> addresses = new ArrayList<>();
 
 	public String getName() {
 		return name;
@@ -79,11 +77,11 @@ public class Contract extends CommonBaseModel {
 		this.phone_number = phone_number;
 	}
 
-	public Set<Address> getAddresses() {
+	public List<Address> getAddresses() {
 		return addresses;
 	}
 
-	public void setAddresses(Set<Address> addresses) {
+	public void setAddresses(List<Address> addresses) {
 		this.addresses.clear();
 	    this.addresses.addAll(addresses);
 	}

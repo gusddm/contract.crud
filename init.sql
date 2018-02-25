@@ -18,5 +18,6 @@ CREATE TABLE IF NOT EXISTS contract_db.address (
   profile_id  BIGINT UNSIGNED not null,
   address 	  varchar(90) not null,  
   city 		  varchar(60) not null,
+  state		  varchar(30) not null,
   postal_code varchar(20) not null
 );

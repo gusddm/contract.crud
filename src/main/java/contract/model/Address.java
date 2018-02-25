@@ -25,14 +25,14 @@ public class Address {
 	private String address;
 	private String city;
 	private String postal_code;
-	
+	private String state;
 
 	@ManyToOne()
 	@JoinColumn(name = "profile_id", updatable = true, insertable = true)
 	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "addresses")
 	@JsonBackReference
-	private Contract contract;		
-	
+	private Contract contract;	
+
 	public String getAddress() {
 		return address;
 	}
@@ -63,6 +63,14 @@ public class Address {
 
 	public void setContract(Contract contract) {
 		this.contract = contract;
+	}		
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
 	}
 
 	@Override

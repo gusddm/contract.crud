@@ -14,5 +14,5 @@ public interface ContractRepository extends PagingAndSortingRepository<Contract,
 
   /** Get collections of Person by name. */
   List<Contract> findByName(@Param("name") String name);
-  
+  List<Contract> findByAddressesCityOrAddressesState(@Param("city") String city, @Param("state") String state);
 }
