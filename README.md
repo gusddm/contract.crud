@@ -12,7 +12,7 @@ There's a docker-compose file included, so if you like docker, you can set the m
 
 First you'll need a dockker mysql image:
 
-  docker pull mysql/mysql-server:tag
+  docker pull mysql/mysql-server:latest
 
 Then start the instance, with schema/table definition:
 
