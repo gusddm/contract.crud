@@ -4,6 +4,10 @@ Spring Boot based solution for a Rest Api exposing Crud operations, including pa
 Installation
 ------------
 
+This is a maven project, so just run:
+
+  mvn compile
+
 There's a docker-compose file included, so if you like docker, you can set the mysql database up and running, including schema and tables creation with this command:
 
   docker-compose up mysql
